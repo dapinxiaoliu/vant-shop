@@ -4,7 +4,8 @@ import qs from 'qs'
 export default function request(url,params='a',type='get'){
 	//axios封装
 	const instance = axios.create({
-		baseURL: 'http://demo.itlike.com/web/xlmc/api',
+		// baseURL: 'http://demo.itlike.com/web/xlmc/api',
+		baseURL: 'https://www.escook.cn',
 		timeout: 5000
 	})
 	

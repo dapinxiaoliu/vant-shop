@@ -12,7 +12,7 @@
 			return{}
 		},
 		async created() {
-			await request('/homeApi')
+			await request('/api/goods')
 			.then(res => {
 				console.log(res);
 			}).catch(err =>{
