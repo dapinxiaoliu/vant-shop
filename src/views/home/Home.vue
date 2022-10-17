@@ -5,12 +5,23 @@
 </template>
 
 <script>
+	import request from '../../service/request.js'
 	export default {
 		name:'Home',
 		data(){
 			return{}
 		},
+		async created() {
+			await request('/homeApi')
+			.then(res => {
+				console.log(res);
+			}).catch(err =>{
+				console.log(err);
+			})
+		},
 		methods: {
+			
+			
 		}
 	}
 </script>
