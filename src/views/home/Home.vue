@@ -5,14 +5,15 @@
 </template>
 
 <script>
-	import request from '../../service/request.js'
+	import request from '@/service/request.js'
 	export default {
 		name:'Home',
 		data(){
 			return{}
 		},
 		async created() {
-			await request('/api/goods')
+			// await request('/api/goods')
+			await request('/api/homeApi')
 			.then(res => {
 				console.log(res);
 			}).catch(err =>{
@@ -20,7 +21,6 @@
 			})
 		},
 		methods: {
-			
 			
 		}
 	}
