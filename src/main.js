@@ -9,6 +9,10 @@ if ('addEventListener' in document) {
     }, false);
 }
 
+
+import '@/config/rem.js'
+
+
 import '@/style/common.less' //全局样式
 import '@/plugins/vant'	//UI组件库
 
