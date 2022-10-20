@@ -2,7 +2,6 @@
 	<div class="order">
 		<van-nav-bar
 		  title="填写订单"
-		  right-text="登录"
 		  :fixed='true'
 		  :border='true'
 		  left-arrow
@@ -45,18 +44,18 @@
 
 <style lang="less" scoped>
 	.order{
-		width: 100%;
+		width: 7.5rem;
 		height: 100%;
 		background: #f5f5f5;
 		.my-address-enter-active,
 		.my-address-leave-active{
 			transition: all .3s;
 		}
-		// .my-address-enter,
-		// .my-address-leave-active{
-		// 	transform: translate3d(5em , 0 , 0);
-		// 	opacity: 0;
-		// }
+		.my-address-enter,
+		.my-address-leave-active{
+			transform: translateY(10rem);
+			opacity: 0;
+		}
 		
 	}
 </style>
