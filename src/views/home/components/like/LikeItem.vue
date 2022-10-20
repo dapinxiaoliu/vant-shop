@@ -8,22 +8,26 @@
 			</van-image>
 			<div class="itemwarp">
 				<p>{{item.title}} {{item.biaoshi}}</p>
-				<span>¥{{item.yj}}</span>
-				<div><em>¥{{item.xj}}</em> <img :src="cart"> </div>
+				<span>{{item.yj | moneyFormat}}</span>
+				<div><em>{{item.xj | moneyFormat}}</em> <img :src="cart" @click="addGoodsToCart(item)"> </div>
 			</div>
-			
 		</li>
 	</div>
 </template>
 
 <script>
+	import PubSub from 'pubsub-js'
 	export default {
 		name:'',
 		props:['item','cart'],
+		emits:['sendItem'],
 		data(){
 			return{}
 		},
 		methods: {
+			addGoodsToCart(goods){
+				PubSub.publish('addToCart', goods)
+			}
 		}
 	}
 </script>

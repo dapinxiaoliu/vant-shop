@@ -4,8 +4,8 @@
 			<div class="item">
 				<img :src="item.name" alt="">
 				<p>{{item.title}} {{item.biaoshi}}</p>
-				<span>¥{{item.yj}}</span>
-				<div><em>¥{{item.xj}}</em> <img :src="cart"> </div>
+				<span>{{item.yj | moneyFormat}}</span>
+				<div><em>{{item.xj | moneyFormat}}</em> <img :src="cart"> </div>
 			</div>
 		</div>
 	</div>

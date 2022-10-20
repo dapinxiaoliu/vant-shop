@@ -15,8 +15,8 @@
 					  	<div class="item">
 					  		<img :src="item.name" alt="">
 					  		<p>{{item.title}} {{item.biaoshi}}</p>
-					  		<span>¥{{item.yj}}</span>
-					  		<div><em>¥{{item.xj}}</em> <img :src="cart"> </div>
+					  		<span>{{item.yj | moneyFormat}}</span>
+					  		<div><em>{{item.xj | moneyFormat}}</em> <img :src="cart"> </div>
 					  	</div>
 					  </div>
 					<!-- <FlashSaleItem v-for="item in flashdata" :cart='cart'  :item='item' :key='item.id'/> -->
@@ -94,7 +94,7 @@
 					}
 					div::after{
 						content: "";
-						height: .4rem;
+						height: .3rem;
 						width: .05rem;
 						position: absolute;
 						background: red;

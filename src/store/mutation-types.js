@@ -1,0 +1,6 @@
+export const ADD_GOODS = 'ADD_GOODS'
+export const INIT_SHOP_CART = 'INIT_SHOP_CART'
+export const DEL_SHOP = 'DEL_SHOP'
+export const SELECTED_GOODS_STATUS = 'SELECTED_GOODS_STATUS'
+export const CHECK_ALL = 'CHECK_ALL'
+export const CLEAR_CART = 'CLEAR_CART'

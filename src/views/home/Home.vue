@@ -20,6 +20,10 @@
 	import Navlist from './components/nav/Navlist.vue'
 	import FlashSale from './components/flashSale/FlashSale.vue'
 	import Like from './components/like/Like.vue'
+	
+	import PubSub from 'pubsub-js'
+	import {mapMutations} from 'vuex'
+	import {Toast} from 'vant'
 	export default {
 		name:'Home',
 		components:{
@@ -62,7 +66,7 @@
 		},
 		async created() {
 			// await request('/api/goods')
-			// await request('/api/homeApi')
+			// await request('/homeApi/categories')
 			// .then(res => {
 			// 	console.log(res);
 			// }).catch(err =>{
@@ -72,7 +76,27 @@
 				this.showhome = true
 			},500)
 		},
+		mounted() {
+			
+			
+			//消息订阅
+			PubSub.subscribe('addToCart', (msg, goods) => {
+				if(msg == 'addToCart'){
+					this.ADD_GOODS({
+						'id': goods.id,
+						'title': goods.title,
+						'xj': goods.xj,
+						'name': goods.name
+					})
+				}
+				Toast({
+					message: '成功添加到购物车'
+				});
+				
+			})
+		},
 		methods: {
+			...mapMutations(['ADD_GOODS']),
 			
 		}
 	}

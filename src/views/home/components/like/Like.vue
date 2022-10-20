@@ -25,6 +25,7 @@
 			return{}
 		},
 		methods: {
+			
 		}
 	}
 </script>

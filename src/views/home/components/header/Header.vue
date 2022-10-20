@@ -44,12 +44,13 @@
 		top: 0;
 		background: #fff;
 		z-index: 99;
+		width: 7.5rem;
 	}
 	.wrapper {
 		height: 1rem;
 		width: 100%;
 		box-sizing: border-box;
-		background: white;
+
 		border-bottom: solid 1px #eeeeee;
 		border-top: solid 1px #eeeeee;
 		display: flex;

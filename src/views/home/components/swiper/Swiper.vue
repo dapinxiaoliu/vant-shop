@@ -48,5 +48,8 @@
 <style lang="less" scoped>
 #swiper{
 	padding-top: 1rem;
+	.swiper-pagination{
+		bottom: .2rem;
+	}
 }
 </style>

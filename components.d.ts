@@ -10,8 +10,12 @@ declare module '@vue/runtime-core' {
     BackTop: typeof import('./src/components/backtop/BackTop.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VanCheckbox: typeof import('vant/es')['Checkbox']
+    VanContactCard: typeof import('vant/es')['ContactCard']
+    VanContactList: typeof import('vant/es')['ContactList']
     VanImage: typeof import('vant/es')['Image']
     VanLoading: typeof import('vant/es')['Loading']
+    VanNavBar: typeof import('vant/es')['NavBar']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
   }
