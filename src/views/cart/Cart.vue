@@ -1,52 +1,59 @@
 <template>
 	<div id="cart">
-		<div class="header">
-			<strong>购物车</strong>
-			<button @click="clearCart" >清空购物车</button>
-		</div>
-		<ul class="cartul">
-			<li class="cartitem" v-for="item in shopCart" :key="item.id">
-				<div class="itemleft">
-					<van-checkbox v-model="item.checkbox" @click.stop="changeSelectedStatus(item.id)"></van-checkbox>
-				</div>
-				<div class="itemcenter"><img :src="item.img" alt=""></div>
-				<div class="itemright">
-					<p>{{item.name}}</p>
-					<div>
-						<em>价格: {{item.price | moneyFormat}}</em>
-						<span>
-							<i @click="downGoodsNum(item.id,item.num)">-</i>
-							<input type="number" v-model="item.num">
-							<i @click="upGoodsNum(item.id,item.name,item.price,item.img)">+</i>
-						</span>
+		<div v-if="userInfo.token">
+			<div class="header">
+				<strong>购物车</strong>
+				<button @click="clearCart" >清空购物车</button>
+			</div>
+			<ul class="cartul">
+				<li class="cartitem" v-for="item in shopCart" :key="item.id">
+					<div class="itemleft">
+						<van-checkbox v-model="item.checkbox" @click.stop="changeSelectedStatus(item.id)"></van-checkbox>
 					</div>
-				</div>
-			</li>
+					<div class="itemcenter"><img :src="item.img" alt=""></div>
+					<div class="itemright">
+						<p>{{item.name}}</p>
+						<div>
+							<em>价格: {{item.price | moneyFormat}}</em>
+							<span>
+								<i @click="downGoodsNum(item.id,item.num)">-</i>
+								<input type="number" v-model="item.num">
+								<i @click="upGoodsNum(item.id,item.name,item.price,item.img)">+</i>
+							</span>
+						</div>
+					</div>
+				</li>
 
 
-		</ul>
-		
-		<div class="totalbox">
-			<div class="checkall" @click.stop="checkAll(isAllChecked)"><van-checkbox v-model="isAllChecked"> </van-checkbox></div>
-			<div class="price"> 合计：<span>{{totalPrice | moneyFormat}}</span> </div>
-			<div class="goToPay"> <a href="javascript:void(0)" @click="goToPay">去结算({{totalNum}})</a>  </div>
+			</ul>
+			
+			<div class="totalbox">
+				<div class="checkall" @click.stop="checkAll(isAllChecked)"><van-checkbox v-model="isAllChecked"> </van-checkbox></div>
+				<div class="price"> 合计：<span>{{totalPrice | moneyFormat}}</span> </div>
+				<div class="goToPay"> <a href="javascript:void(0)" @click="goToPay">去结算({{totalNum}})</a>  </div>
+			</div>
 		</div>
+		<SelectLogin v-else />
 	</div>
 </template>
 
 <script>
 	import {mapState,mapMutations} from 'vuex'
 	import {Dialog,Toast} from 'vant'
+	import SelectLogin from '../login/SelectLogin.vue'
 	
 	export default {
 		name:'Cart',
+		components:{
+			SelectLogin
+		},
 		data(){
 			return{
 				
 			}
 		},
 		computed:{
-			...mapState(['shopCart']),
+			...mapState(['shopCart','userInfo']),
 			isAllChecked(){
 				let cartEmpty = Object.values(this.shopCart).length
 				let ischeck = cartEmpty > 0 
@@ -130,9 +137,18 @@
 				
 			},
 			goToPay(){
-				let goodsSize = Object.values(this.shopCart).length
-				if(goodsSize == 0) return Toast('购物车空空如也');
-				this.$router.push('/order')
+				let shopCart = Object.values(this.shopCart)
+				if(shopCart.length == 0) return Toast('购物车空空如也');
+				let goodsStatus = false
+				shopCart.forEach(goods => {
+					if(goods.checkbox == true) goodsStatus = true
+				})
+				if(goodsStatus){
+					this.$router.push('/order')
+				}else{
+					Toast('您还没有选择商品哦');
+				}
+				
 			}
 		}
 	}

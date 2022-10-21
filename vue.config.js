@@ -6,10 +6,10 @@ const ComponentsPlugin = require('unplugin-vue-components/webpack');
 module.exports = {
 	transpileDependencies: true,
 	configureWebpack: {
-	plugins: [
-	  ComponentsPlugin({
-		resolvers: [VantResolver()],
-	  }),
-	],
+		plugins: [
+		  ComponentsPlugin({
+			resolvers: [VantResolver()],
+		  }),
+		],
 	},
 };

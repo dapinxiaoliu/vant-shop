@@ -18,6 +18,9 @@ const Mine = () => import('../views/mine/Mine')
 //订单
 const Order = () => import('../views/order/Order')
 const MyAddress = () => import('../views/order/children/MyAddress')
+const AddHost = () => import('../views/order/children/AddAddress')
+const EditAddress = () => import('../views/order/children/EditAddress')
+const Login = () => import('../views/login/Login')
 
 Vue.use(VueRouter)
 
@@ -43,8 +46,21 @@ const routes = [
 	  name:'order',
 	  component: Order,
 	  children:[
-		  {path:'address', name:'address', component: MyAddress}
+			{
+			  path:'address', 
+			  name:'address', 
+			  component: MyAddress,
+			  children:[
+				  {path:'addhost',name:'addhost',component:AddHost},
+				  {path:'edithost',name:'edithost',component:EditAddress}
+			  ]
+			}
 	  ]
+  },
+  {
+	  path:'/login',
+	  name:'login',
+	  component: Login
   }
  
 ]

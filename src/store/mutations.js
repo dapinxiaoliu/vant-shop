@@ -1,4 +1,4 @@
-import {ADD_GOODS,INIT_SHOP_CART,DEL_SHOP,SELECTED_GOODS_STATUS,CHECK_ALL,CLEAR_CART} from './mutation-types.js'
+import {ADD_GOODS,INIT_SHOP_CART,DEL_SHOP,SELECTED_GOODS_STATUS,CHECK_ALL,CLEAR_CART,USER_INFO,INIT_USER_INFO} from './mutation-types.js'
 
 import {setStrore, getStrore, removeStrore} from '@/config/global'
 import Vue from 'vue'
@@ -68,5 +68,16 @@ export default{
 		state.shopCart = null
 		state.shopCart = {...state.shopCart}
 		setStrore('shopCart', state.shopCart)
+	},
+	[USER_INFO](state, userinfo){
+		state.userInfo = userinfo
+		setStrore('userinfo',state.userInfo)
+	},
+	[INIT_USER_INFO](state){
+		let userinfo = getStrore('userinfo')
+		if(userinfo){
+			state.userInfo = JSON.parse(userinfo)
+		}
+		
 	}
 }
