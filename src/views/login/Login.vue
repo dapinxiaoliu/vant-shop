@@ -20,8 +20,8 @@
 		                <!--手机验证码登录部分-->
 		                <div class="current" v-if="showLogin" >
 		                    <section class="login-message">
-		                        <input type="number" maxlength="11" placeholder="手机号" v-model="phone" >
-		                        <button v-if="!codeDown"  class="get-verification phone_right" @click="getVerifyCode">获取验证码</button>
+		                        <input type="number" maxlength="11" placeholder="手机号"  v-model="phone" >
+		                        <button v-if="!codeDown" :class="{phoneError:checkCode}"  class="get-verification phone_right" @click="getVerifyCode">获取验证码</button>
 		                        <button v-else disabled="disabled" class="get-verification">
 		                            已发送({{codeDown}}s)
 		                        </button>
@@ -60,7 +60,7 @@
 		                </div>
 		                <button class="login-submit" @click="login">登录</button>
 		            </form>
-		            <button class="login-back">返回</button>
+		            <button class="login-back" @click="$router.back()">返回</button>
 		        </div>
 		    </div>
 		</div>
@@ -105,6 +105,7 @@
 					},1000)
 					//获取验证码
 					// console.log(this.verifyCode);
+					Toast('验证码已发送，注意查收')
 					
 				}else{
 					Toast('手机号码错误')
@@ -142,13 +143,18 @@
 
 <style lang="less" scoped>
 	.phoneError{
-		color: red;
+		color: #75a342 !important;
 	}
 	.login{
 		        .login-container {
 		            width: 100%;
 		            height: 100%;
 		            background: #fff;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					top: 0;
 		        }
 		
 		        .login-container .login-inner {
@@ -228,7 +234,7 @@
 		        }
 		
 		        .login-container .login-inner .login-content > form > div .login-message .get-verification.phone_right {
-		            color: #75a342
+		            color: #ccc
 		        }
 		
 		        .login-container .login-inner .login-content > form > div .login-verification {

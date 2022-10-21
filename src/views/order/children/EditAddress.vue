@@ -18,6 +18,7 @@
 		  @save="onSave"
 		  @delete="onDelete"
 		  @change-detail="onChangeDetail"
+		  style="margin-top: 50px;"
 		/>
 		<transition name="my-address" mode="out-in">
 			<router-view></router-view>

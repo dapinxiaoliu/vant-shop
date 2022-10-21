@@ -91,7 +91,6 @@
 		},
 		mounted() {
 			this.getCategory()
-			console.log( window.screen.availHeight);
 			this.$refs.leftNavBox.style.height = window.screen.height-100 + 'px'
 			
 		},

@@ -28,7 +28,7 @@
 			</ul>
 			
 			<div class="totalbox">
-				<div class="checkall" @click.stop="checkAll(isAllChecked)"><van-checkbox v-model="isAllChecked"> </van-checkbox></div>
+				<div class="checkall" @click.stop="checkAll(isAllChecked)"><van-checkbox :value="isAllChecked"> </van-checkbox></div>
 				<div class="price"> 合计：<span>{{totalPrice | moneyFormat}}</span> </div>
 				<div class="goToPay"> <a href="javascript:void(0)" @click="goToPay">去结算({{totalNum}})</a>  </div>
 			</div>
