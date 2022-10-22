@@ -17,7 +17,7 @@
 		/>
 		
 		<van-cell-group>
-		  <van-cell title="送达时间" value="请选择送达时间" is-link/>
+		  <van-cell title="送达时间" :value="currentMsg" @click="showSendTime" is-link/>
 		  <van-cell value="共5件商品" is-link :center='true'>
 		    <!-- 使用 title 插槽来自定义标题 -->
 		    <template #title>
@@ -48,6 +48,23 @@
 		<van-submit-bar label="合计" :price="3050" button-text="提交订单" @submit="onSubmit" />
 		
 		
+		<van-popup
+		  v-model:show="show"
+		  round
+		  position="bottom"
+		  :style="{ height: '30%' }"
+		>
+			<van-datetime-picker
+				v-model="currentDate"
+				type="date"
+				:min-date="minDate"
+				title="选择年月日"
+				@cancel="cancelTime"
+				@confirm="successTime"
+			/>
+		</van-popup>
+		
+		
 		<transition name="my-address" mode="out-in">
 			<router-view></router-view>
 		</transition>
@@ -58,10 +75,19 @@
 </template>
 
 <script>
+	import Moment from 'moment'
 	export default {
 		name:'',
 		data(){
-			return{}
+			return{
+				show: false,
+				minDate: new Date(),
+				currentDate: new Date(),
+				currentMsg: '请选择送达时间',
+			}
+		},
+		computed:{
+			
 		},
 		methods: {
 			onClickLeft(){
@@ -75,6 +101,16 @@
 			},
 			onSubmit(){
 				
+			},
+			showSendTime(){
+				this.show = true
+			},
+			cancelTime(){
+				this.show = false
+			},
+			successTime(value){
+				this.show = false
+				this.currentMsg = Moment(value).format('YYYY-MM-DD')
 			}
 		}
 	}

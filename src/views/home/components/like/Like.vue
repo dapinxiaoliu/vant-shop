@@ -6,7 +6,7 @@
 		    </div>
 		    <div>
 				<ul>
-					<LikeItem  v-for="item in likedata" :item="item" :key="item.id" :cart="cart"/>
+					<LikeItem  v-for="item in likedata" :item="item" :key="item.id" :cart="cart" @sendItem="sendTime"/>
 				</ul>
 			</div>
 		</div>
@@ -18,6 +18,7 @@
 	export default {
 		name:'',
 		props:['likedata','cart'],
+		emits:['goodsToHome'],
 		components:{
 			LikeItem
 		},
@@ -25,7 +26,9 @@
 			return{}
 		},
 		methods: {
-			
+			sendTime(goods){
+				this.$emit('goodsToHome', goods)
+			}
 		}
 	}
 </script>

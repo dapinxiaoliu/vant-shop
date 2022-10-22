@@ -1,3 +1,3 @@
 import Vue from 'vue'
-import { Tabbar, TabbarItem , Loading , Image ,Toast ,Dialog ,Checkbox, CheckboxGroup,NavBar ,ContactCard,AddressEdit ,AddressList, Cell, CellGroup,Field, SubmitBar,Grid, GridItem} from 'vant'
-Vue.use(Tabbar).use(TabbarItem).use(Loading).use(Image).use(Toast).use(Dialog).use(Checkbox).use(CheckboxGroup).use(NavBar).use(ContactCard).use(AddressList).use(AddressEdit).use(Cell).use(CellGroup).use(Field).use(SubmitBar ).use(Grid).use(GridItem)
+import { Tabbar, TabbarItem , Loading , Image ,Toast ,Dialog ,Checkbox, CheckboxGroup,NavBar ,ContactCard,AddressEdit ,AddressList, Cell, CellGroup,Field, SubmitBar,Grid, GridItem,Popup ,DatetimePicker  } from 'vant'
+Vue.use(Tabbar).use(TabbarItem).use(Loading).use(Image).use(Toast).use(Dialog).use(Checkbox).use(CheckboxGroup).use(NavBar).use(ContactCard).use(AddressList).use(AddressEdit).use(Cell).use(CellGroup).use(Field).use(SubmitBar ).use(Grid).use(GridItem).use(DatetimePicker  ).use(Popup)

@@ -14,6 +14,7 @@ const Home = () => import('../views/home/Home')
 const Category = () => import('../views/category/Category')
 const Cart = () => import('../views/cart/Cart')
 const Mine = () => import('../views/mine/Mine')
+const UserCenter = () => import('../views/mine/children/UserCenter')
 
 //订单
 const Order = () => import('../views/order/Order')
@@ -38,7 +39,14 @@ const routes = [
 		  {path:'home', name:'home',component:Home, meta:{keepalive: true}},
 		  {path:'category', name:'category',component:Category, meta:{keepalive: true}},
 		  {path:'cart', name:'cart',component:Cart},
-		  {path:'mine', name:'mine',component:Mine},
+		  {
+			  path:'mine', 
+			  name:'mine',
+			  component:Mine,
+			  children:[
+				  {path:'user', name:'user', component: UserCenter}
+			  ]
+			},
 	  ]
   },
   {

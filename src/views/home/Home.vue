@@ -6,7 +6,7 @@
 			<Swiper :swiperimg='swiperimg'/>
 			<Navlist :navimg="navimg"/>
 			<FlashSale :flashdata='flashData' :cart='cart'/>
-			<Like :likedata="flashData" :cart='cart'/>
+			<Like :likedata="flashData" :cart='cart' @goodsToHome="addGoodsToCart"/>
 		</div>
 		<van-loading class="homeloading" v-else size="24px">小冠奋力加载中...</van-loading>
 		
@@ -22,7 +22,7 @@
 	import Like from './components/like/Like.vue'
 	
 	import PubSub from 'pubsub-js'
-	import {mapMutations} from 'vuex'
+	import {mapState,mapMutations} from 'vuex'
 	import {Toast} from 'vant'
 	export default {
 		name:'Home',
@@ -80,24 +80,44 @@
 			
 			
 			//消息订阅
-			PubSub.subscribe('addToCart', (msg, goods) => {
-				if(msg == 'addToCart'){
+			// PubSub.subscribe('addToCart', (msg, goods) => {
+			// 	if(msg == 'addToCart'){
+			// 		this.ADD_GOODS({
+			// 			'id': goods.id,
+			// 			'title': goods.title,
+			// 			'xj': goods.xj,
+			// 			'name': goods.name
+			// 		})
+			// 	}
+			// 	Toast({
+			// 		message: '成功添加到购物车'
+			// 	});
+				
+			// })
+		},
+		
+		methods: {
+			...mapMutations(['ADD_GOODS']),
+			addGoodsToCart(goods){
+				if(this.userInfo.token){
 					this.ADD_GOODS({
 						'id': goods.id,
 						'title': goods.title,
 						'xj': goods.xj,
 						'name': goods.name
 					})
+					Toast({
+						message: '成功添加到购物车'
+					});
+				}else{
+					this.$router.push('/login')
 				}
-				Toast({
-					message: '成功添加到购物车'
-				});
 				
-			})
-		},
-		methods: {
-			...mapMutations(['ADD_GOODS']),
+			}
 			
+		},
+		computed:{
+			...mapState(['userInfo'])
 		}
 	}
 </script>

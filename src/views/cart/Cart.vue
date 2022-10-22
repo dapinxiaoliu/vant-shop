@@ -121,6 +121,7 @@
 				this.CHECK_ALL(status)
 			},
 			clearCart(){
+				
 				let goodsSize = Object.values(this.shopCart).length
 				if(goodsSize == 0) return Toast('购物车空空如也');
 				Dialog.confirm({
@@ -130,6 +131,7 @@
 				})
 				.then(() => {
 					this.CLEAR_CART()
+					console.log(this.shopCart);
 				})
 				.catch(() => {
 					//不错任何操作

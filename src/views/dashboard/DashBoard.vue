@@ -66,10 +66,12 @@ import { INIT_SHOP_CART } from '@/store/mutation-types';
 			}
 		},
 		mounted() {
+			this.INIT_USER_INFO()
 			this.INIT_SHOP_CART()
+			
 		},
 		methods:{
-			...mapMutations(['INIT_SHOP_CART']),
+			...mapMutations(['INIT_SHOP_CART','INIT_USER_INFO']),
 			backTop(){
 				$('html,body').animate({
 					scrollTop: 0

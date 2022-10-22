@@ -98,7 +98,11 @@
 			getCategory(){
 				this.$nextTick(()=>{
 					this.leftScroll = new BetterScroll('.leftWrapper',{
-						probeType: 3
+						probeType: 3,
+						click: true,
+						scrollY: true,
+						tap: true,
+						mouseWheel: true
 					})
 					
 				})

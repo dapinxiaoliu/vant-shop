@@ -16,18 +16,18 @@
 		        </div>
 		        <!--面板表单部分-->
 		        <div class="login-content">
-		            <form>
+		            <div class="login-box">
 		                <!--手机验证码登录部分-->
 		                <div class="current" v-if="showLogin" >
 		                    <section class="login-message">
-		                        <input type="number" maxlength="11" placeholder="手机号"  v-model="phone" >
-		                        <button v-if="!codeDown" :class="{phoneError:checkCode}"  class="get-verification phone_right" @click="getVerifyCode">获取验证码</button>
+		                        <input type="text" placeholder="手机号"  v-model.number="phone" >
+		                        <button v-if="!codeDown" :class="{phoneError:checkCode}"  class="get-verification phone_right" @click.prevent="getVerifyCode">获取验证码</button>
 		                        <button v-else disabled="disabled" class="get-verification">
 		                            已发送({{codeDown}}s)
 		                        </button>
 		                    </section>
 		                    <section class="login-verification">
-		                        <input type="number" maxlength="6" v-model="verifyCode" placeholder="验证码"/>
+		                        <input type="text" v-model.number="verifyCode" placeholder="验证码"/>
 		                    </section>
 		                    <section class="login-hint">
 		                        温馨提示：未注册的手机号，登录时将自动注册，且代表已同意
@@ -38,28 +38,30 @@
 		                <div v-else>
 		                    <section>
 		                        <section class="login-message">
-		                            <input type="tel" maxlength="11" placeholder="用户名">
+		                            <input type="text"  placeholder="用户名" v-model="username">
 		                        </section>
 		                        <section class="login-verification">
-		                            <input  type="password" maxlength="20" placeholder="密码" autocomplete="off" />
-		                            <!--<input  type="text" maxlength="20" placeholder="密码" autocomplete="off" />-->
+		                            <input  type="password" v-if="pwdModel"  placeholder="密码" autocomplete="off" v-model="pwd" />
+		                            <input  type="text" v-else  placeholder="密码" autocomplete="off" v-model="pwd"/>
 		                            <div class="switch-show">
-		                                <img src="./images/hide_pwd.png" class="on" alt="">
-		                                <img src="./images/show_pwd.png" alt="" width="20">
+		                                <img src="./images/hide_pwd.png" v-if="pwdModel" @click.prevent="setEye(false)" class="on" alt="">
+		                                <img src="./images/show_pwd.png" v-else @click.prevent="setEye(true)" alt="" width="20">
 		                            </div>
 		                        </section>
 		                        <section class="login-message">
-		                            <input type="text" maxlength="4" placeholder="验证码">
+		                            <input type="text" v-model="code" placeholder="验证码">
 		                            <img
 		                                    class="get-verification"
-		                                    src="./images/captcha.svg"
+		                                    :src= currentCode
 		                                    alt="captcha"
+											ref="captcha"
+											@click.prevent="getCaptcha"
 		                            >
 		                        </section>
 		                    </section>
 		                </div>
-		                <button class="login-submit" @click="login">登录</button>
-		            </form>
+		                <button class="login-submit" @click.prevent="login">登录</button>
+		            </div>
 		            <button class="login-back" @click="$router.back()">返回</button>
 		        </div>
 		    </div>
@@ -79,7 +81,13 @@
 				codeDown:0,
 				timeId:null,
 				verifyCode:'',
-				userInfo:null
+				userInfo:null,
+				
+				username:null,
+				pwd:null,
+				pwdModel:true,
+				code:null,
+				currentCode: require('./images/captcha.svg')
 				
 
 			}
@@ -123,10 +131,11 @@
 						return 
 					}else{
 						console.log('登录成功');
-						this.userInfo = {id:0, name:'小冠', token:'sflkjwlefnlsdnf'}
+						this.userInfo = {id:0, name:'admin', token:'sflkjwlefnlsdnf'}
 						// console.log(this.userInfo);
 						//存储到vuex
 						this.USER_INFO(this.userInfo)
+						
 						
 						this.$router.back()
 						
@@ -135,13 +144,46 @@
 					
 				}else{
 					//用户名登录
+					if(!this.username){
+						Toast({
+							message:'请填写用户名'
+						})
+						return
+					}else if(!this.pwd){
+						Toast({
+							message:'请填写密码'
+						})
+						return
+					}else if(!this.code){
+						Toast('请输入验证码')
+						return 
+					}
+					if(this.username == 'admin' && this.pwd == '123456' && this.code == 'abcd'){
+						this.userInfo = {id:0, name:'admin', token:'sflkjwlefnlsdnf'}
+						this.USER_INFO(this.userInfo)
+						this.$router.back()
+					}else{
+						Toast('信息输入错误')
+					}
+					
+					
 				}
+			},
+			getCaptcha(){
+				let captcha = this.$refs.captcha
+				this.$set(captcha, 'src', this.currentCode +"?id="+ Math.random())
+			},
+			setEye(flag){
+				this.pwdModel = flag
 			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
+	input[type='password']::-ms-reveal{
+		display: none;
+	}
 	.phoneError{
 		color: #75a342 !important;
 	}
@@ -195,11 +237,11 @@
 		
 
 		
-		        .login-container .login-inner .login-content > form > div.current {
+		        .login-container .login-inner .login-content > .login-box > div.current {
 		            display: block
 		        }
 		
-		        .login-container .login-inner .login-content > form > div input {
+		        .login-container .login-inner .login-content > .login-box > div input {
 		            width: 100%;
 		            height: 100%;
 		            padding-left: 8px;
@@ -210,11 +252,11 @@
 		            font: 400 14px Arial;
 		        }
 		
-		        .login-container .login-inner .login-content > form > div input:focus {
+		        .login-container .login-inner .login-content > .login-box > div input:focus {
 		            border: 1px solid #75a342
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-message {
+		        .login-container .login-inner .login-content > .login-box > div .login-message {
 		            position: relative;
 		            margin-top: 16px;
 		            height: 48px;
@@ -222,22 +264,22 @@
 		            background: #fff;
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-message .get-verification {
+		        .get-verification {
 		            position: absolute;
 		            top: 50%;
 		            right: 10px;
 		            transform: translateY(-50%);
 		            border: 0;
 		            color: #ccc;
-		            font-size: 10px;
+					width: 100px;
 		            background: transparent;
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-message .get-verification.phone_right {
+		        .login-container .login-inner .login-content > .login-box > div .login-message .get-verification.phone_right {
 		            color: #ccc
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-verification {
+		        .login-container .login-inner .login-content > .login-box > div .login-verification {
 		            position: relative;
 		            margin-top: 16px;
 		            height: 48px;
@@ -245,32 +287,28 @@
 		            background: #fff;
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-verification .switch-show {
+		        .switch-show {
 		            position: absolute;
 		            right: 10px;
 		            top: 12px;
+					img{
+						width: 30px;
+					}
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-verification .switch-show img {
-		            display: none
-		        }
-		
-		        .login-container .login-inner .login-content > form > div .login-verification .switch-show img.on {
-		            display: block
-		        }
-		
-		        .login-container .login-inner .login-content > form > div .login-hint {
+		        
+		        .login-container .login-inner .login-content > .login-box > div .login-hint {
 		            margin-top: 12px;
 		            color: #999;
 		            font-size: 12px;
 		            line-height: 20px;
 		        }
 		
-		        .login-container .login-inner .login-content > form > div .login-hint > a {
+		        .login-container .login-inner .login-content > .login-box > div .login-hint > a {
 		            color: #75a342
 		        }
 		
-		        .login-container .login-inner .login-content > form .login-submit {
+		        .login-container .login-inner .login-content > .login-box .login-submit {
 		            display: block;
 		            width: 100%;
 		            height: 42px;

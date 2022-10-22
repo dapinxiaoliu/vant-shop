@@ -14,7 +14,7 @@
 					<div class="personBox">
 						<img src="@/images/nav6.png" alt="" style="width: 2rem;">
 						<div class="personInfo">
-							<p>小冠</p>
+							<p>{{userInfo.name}}</p>
 							<p>北京冠领律师事务所</p>
 						</div>
 					</div>
@@ -46,6 +46,13 @@
 			<van-cell-group>
 			  <van-cell icon="bag" title="我的订单" value="查看所有订单" is-link/>
 			</van-cell-group>
+			<van-cell-group>
+			  <van-cell icon="bag" title="设置"  is-link @click="goToUserCenter"/>
+			</van-cell-group>
+			<transition name="my-address">
+				<router-view></router-view>
+			</transition>
+			
 		</div>
 		<SelectLogin v-else />
 	</div>
@@ -70,11 +77,15 @@
 			}
 		},
 		methods: {
+			goToUserCenter(){
+				this.$router.push('/dashboard/mine/user')
+			}
 		},
 		computed:{
 			...mapState(['userInfo'])
 		},
 		mounted(){
+			
 			
 		}
 	}
@@ -89,9 +100,9 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		/deep/ .van-nav-bar{
+		 .van-nav-bar{
 			background-color:seagreen;
-			.van-nav-bar__title{
+			/deep/ .van-nav-bar__title{
 				color: #fff;
 			}
 			

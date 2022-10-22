@@ -25,12 +25,13 @@
 </template>
 
 <script>
+	import Area from '@/config/area'
 	export default {
 		name:'addhost',
 		data(){
 			return{
 				searchResult:[],
-				areaList:{}
+				areaList: Area
 			}
 		},
 		methods: {

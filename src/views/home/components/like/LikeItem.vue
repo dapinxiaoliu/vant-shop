@@ -9,14 +9,16 @@
 			<div class="itemwarp">
 				<p>{{item.title}} {{item.biaoshi}}</p>
 				<span>{{item.yj | moneyFormat}}</span>
-				<div><em>{{item.xj | moneyFormat}}</em> <img :src="cart" @click="addGoodsToCart(item)"> </div>
+				<div><em>{{item.xj | moneyFormat}}</em> <img :src="cart" @click.stop="addGoodsToCart(item)"> </div>
 			</div>
 		</li>
 	</div>
 </template>
 
 <script>
-	import PubSub from 'pubsub-js'
+	// import PubSub from 'pubsub-js'
+	import {mapMutations} from 'vuex'
+	import {Toast} from 'vant'
 	export default {
 		name:'',
 		props:['item','cart'],
@@ -25,8 +27,9 @@
 			return{}
 		},
 		methods: {
+			...mapMutations(['ADD_GOODS']),
 			addGoodsToCart(goods){
-				PubSub.publish('addToCart', goods)
+				this.$emit('sendItem',goods)
 			}
 		}
 	}
